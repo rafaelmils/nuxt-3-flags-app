@@ -1,24 +1,19 @@
 <template>
-  <h2>RAAAAAF</h2>
-  <!-- <h2 class="text-3xl font-bold underline">
-    Page visits: {{ countries }}
-  </h2> -->
-  <div v-for="country in countries" :key="country.numericCode">
-    <div class="country-container">
-      <img :src="country.flags.svg" alt="lall">
-      <div class="info-container">
-        <h3>{{ country.name }}</h3>
-        <p>Population: {{ country.population }}</p>
-        <p>Region: {{ country.region }}</p>
-        <p>Capital: {{ country.capital }}</p>
-    </div>
-    </div>
-  </div>
+  <CountriesList :countries="countries"></CountriesList>
 </template>
 
-<script setup>
-const { data } = await useFetch('https://restcountries.com/v2/all')
-const countries = data
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  async setup(props) {
+    const { data } = await useFetch('https://restcountries.com/v2/all')
+    const countries = data
+
+    return { countries }
+  },
+})
 </script>
 
 <style lang="css" scoped>
@@ -29,7 +24,12 @@ const countries = data
   }
 
   .info-container {
-    padding: 0 10px;
+    padding: 20px 20px;
   }
 
+ .flag-image {
+  object-fit: cover;
+   height: 215px;
+   width: 350px;
+ } 
 </style>
