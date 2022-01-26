@@ -7,13 +7,14 @@
       </Head>
     </Html>
     <nav>
-        <TheHeader />
+        <HeaderSection />
     </nav>
     <main class="container mx-auto">
       <slot></slot>
     </main>
-    <TheFooter />
+    <FooterSection />
 </template>
 
 <style scoped>
+
 </style>

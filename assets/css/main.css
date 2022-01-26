@@ -7,3 +7,12 @@ textarea:focus,
 select:focus {
   outline: none;
 }
+
+p {
+  /* @apply p-1; */
+}
+
+body > footer {
+  position: sticky;
+  top: 100vh;
+}

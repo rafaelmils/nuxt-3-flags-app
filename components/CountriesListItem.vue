@@ -1,5 +1,6 @@
 <template>
-  <div class="country-container mx-4 my-8">
+  <div class="country-container mx-4 my-4">
+    <NuxtLink :to="`/detail/${country.alpha3Code.toLowerCase()}`">
     <img class="flag-image" :src="country?.flags?.svg" alt="lall">
     <div class="info-container">
       <h2 class="font-bold mb-2">{{ country.name }}</h2>
@@ -7,6 +8,7 @@
       <p>Region: {{ country.region }}</p>
       <p>Capital: {{ country.capital }}</p>
     </div>
+    </NuxtLink>
   </div>
 </template>
 
@@ -36,7 +38,7 @@ const props = defineProps({
 
  .flag-image {
    object-fit: cover;
-   height: 215px;
+   height: 240px;
    width: 350px;
 
  } 
