@@ -11,19 +11,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed } from 'vue'
+import { PropType } from 'vue'
 import Country from '@/types/Country'
 
-export default defineComponent({
+export default {
   props: {
     country: {
       type: Object as PropType<Country>,
       required: true
     },
   },
-  setup(props) {
-  },
-})
+}
 </script>
 
 

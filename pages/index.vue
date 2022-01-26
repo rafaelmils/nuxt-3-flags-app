@@ -1,35 +1,30 @@
 <template>
-  <CountriesList :countries="countries"></CountriesList>
+  <FilterActions @queryUpdated="updateResults" :regions="regions.value"></FilterActions>
+  <CountriesList :query="query ?? ''"></CountriesList>
 </template>
 
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
+import CountriesListItem from '@/components/CountriesListItem.vue'
+import fetchCountries from '@/api/fetchCountries'
 
-export default defineComponent({
+export default {
   async setup(props) {
-    const { data } = await useFetch('https://restcountries.com/v2/all')
-    const countries = data
+    const query = ref('')
+    let regions = ref<String[]>([])
+    const {data} = await fetchCountries()
+    regions.value = data
 
-    return { countries }
+    function updateResults(str: string) {
+      query.value = str
+    }
+
+    return {
+      updateResults,
+      query,
+      regions
+      }
   },
-})
+}
 </script>
-
-<style lang="css" scoped>
-  .country-container {
-    max-width: 400px;
-    border: 1px solid grey;
-    border-radius: 5px;
-  }
-
-  .info-container {
-    padding: 20px 20px;
-  }
-
- .flag-image {
-  object-fit: cover;
-   height: 215px;
-   width: 350px;
- } 
-</style>
