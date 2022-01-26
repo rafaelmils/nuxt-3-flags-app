@@ -1,5 +1,6 @@
 <template>
   <div class="flex flex-wrap justify-center">
+    <p>{{ cats }}</p>
     <transition-group name="list">
       <CountriesListItem
         v-for="country in getCountries"
@@ -10,36 +11,35 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { PropType, computed, watch, ref } from 'vue'
 import Country from '@/types/Country'
 import CountriesListItem from '@/components/CountriesListItem.vue'
 import fetchCountries from '@/api/fetchCountries'
 
-export default {
-  props: {
-    query: {
+const props = defineProps({
+  query: {
       type: String,
       required: false,
-    }
-  },
-  async setup(props) {
-    const {query} = toRefs(props);
-    const {data} = await fetchCountries()
-    const countries = data
+  }
+})
 
-    const getCountries = computed(() => {
-      return props.query !== ''
-        ? countries.value.filter(country => country.name.toLowerCase().includes(props.query.toLowerCase()))
-        : countries.value
+const {query} = toRefs(props);
+const {data} = await fetchCountries()
+const countries = data
+
+const getCountries = computed(() => {
+  return props.query !== ''
+    ? countries.value.filter(country => country.name.toLowerCase().includes(props.query.toLowerCase()))
+    : countries.value
+})
+
+
+defineExpose({
+      getCountries,
+      countries,
     })
 
-    return {
-      getCountries,
-      countries
-    }
-  },
-}
 </script>
 
 <style lang="css" scoped>

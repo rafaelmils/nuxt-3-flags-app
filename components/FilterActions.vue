@@ -22,38 +22,35 @@
 </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { defineComponent, PropType, computed } from 'vue'
 import Country from '@/types/Country'
 
-export default {
-  props: {
-    regions: {
+const props = defineProps({
+  regions: {
       type: Array as PropType<Country[]>,
       required: false,
     }
-  },
-  setup(props, context) {
+})
 
-    const {regions} = toRefs(props);
-    console.log(props.regions)
-    function handleChange(e: HTMLInputElement) {
-       context.emit('queryUpdated', e.target.value);
-    }
+const emit = defineEmits(['queryUpdated'])
 
-    const getRegions = computed(() => {
-      const tempArray = []
-      props.regions.forEach(element => {
-        if (!tempArray.includes(element.region.toLowerCase())) {
-        tempArray.push(element.region);
-      }
-      })
-      return tempArray;
-    })
-
-    return {handleChange}
-  },
+const {regions} = toRefs(props);
+function handleChange(e: HTMLInputElement) {
+    emit('queryUpdated', e.target.value);
 }
+
+const getRegions = computed(() => {
+  const tempArray = []
+  props.regions.forEach(element => {
+    if (!tempArray.includes(element.region.toLowerCase())) {
+    tempArray.push(element.region);
+  }
+  })
+  return tempArray;
+})
+
+    
 </script>
 
 <style lang="css" scoped>

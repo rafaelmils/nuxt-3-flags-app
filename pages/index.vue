@@ -1,30 +1,36 @@
 <template>
-  <FilterActions @queryUpdated="updateResults" :regions="regions.value"></FilterActions>
+  <FilterActions
+    @queryUpdated="updateResults"
+    :regions="regions.value"
+  />
   <CountriesList :query="query ?? ''"></CountriesList>
 </template>
 
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
-import CountriesListItem from '@/components/CountriesListItem.vue'
-import fetchCountries from '@/api/fetchCountries'
+<script lang="ts" setup>
+  import { ref } from 'vue'
+  // import Country from '@/types/Country'
+  import fetchCountries from '@/api/fetchCountries'
+  
+  const query = ref('')
+  const regions = ref<String[]>([])
+  const {data: countries} = await fetchCountries()
 
-export default {
-  async setup(props) {
-    const query = ref('')
-    let regions = ref<String[]>([])
-    const {data} = await fetchCountries()
-    regions.value = data
+  const getCountries = computed(() => {
+    return query !== ''
+      ? countries.value.filter(country => country.name.toLowerCase().includes(query.toLowerCase()))
+      : countries.value
+  })
 
-    function updateResults(str: string) {
-      query.value = str
-    }
+  function updateResults(str: string) {
+    query.value = str
+  }
 
-    return {
-      updateResults,
-      query,
-      regions
-      }
-  },
-}
+  defineExpose({
+    getCountries,
+    countries,
+    updateResults,
+    query,
+    regions
+})
 </script>

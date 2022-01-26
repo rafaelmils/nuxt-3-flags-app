@@ -10,26 +10,24 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { PropType } from 'vue'
 import Country from '@/types/Country'
 
-export default {
-  props: {
-    country: {
+const props = defineProps({
+  country: {
       type: Object as PropType<Country>,
       required: true
     },
-  },
-}
+})
 </script>
-
 
 <style lang="css" scoped>
   .country-container {
     max-width: 400px;
     border: 1px solid grey;
     border-radius: 5px;
+    overflow: hidden;
   }
 
   .info-container {
@@ -40,5 +38,6 @@ export default {
    object-fit: cover;
    height: 215px;
    width: 350px;
+
  } 
 </style>
