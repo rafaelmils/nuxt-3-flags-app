@@ -1,5 +1,5 @@
 <template>
-  <div class="cards">
+  <div class="flex flex-wrap justify-center">
     <transition-group name="list">
       <CountriesListItem
         v-for="country in countries"
@@ -26,10 +26,5 @@ const props = defineProps({
 <style lang="css" scoped>
 .list-move {
     transition: all 1.5s;
-  }
-
-  .cards {
-    @apply grid gap-x-1  gap-y-10 mx-auto;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   }
 </style>

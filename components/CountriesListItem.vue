@@ -1,5 +1,5 @@
 <template>
-  <div class="country-container">
+  <div class="country-container mx-4 my-4">
     <NuxtLink :to="`/detail/${country.alpha3Code.toLowerCase()}`">
     <img class="flag-image" :src="country?.flags?.svg" alt="lall">
     <div class="info-container">
@@ -26,11 +26,11 @@ const props = defineProps({
 
 <style lang="css" scoped>
   .country-container {
-    max-width: 300px;
-    margin: 0 auto;
+    max-width: 400px;
     border: 1px solid grey;
     border-radius: 5px;
     overflow: hidden;
+    /* margin: 0; */
   }
 
   .info-container {

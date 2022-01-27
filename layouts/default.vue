@@ -12,7 +12,7 @@
     <main class="container mx-auto">
       <slot></slot>
     </main>
-    <FooterSection />
+    <!-- <FooterSection /> -->
 </template>
 
 <style scoped>
