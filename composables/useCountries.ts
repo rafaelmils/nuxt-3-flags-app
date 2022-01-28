@@ -1,23 +1,23 @@
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import Country from '@/types/Country'
 import fetchCountries from '@/api/fetchCountries'
 
-export const useCats = async () => {
+function getUniqueListBy(arr, key) {
+  return [...new Map(arr.map(item => [item[key], item])).values()]
+}
+
+export default async function ()  {
   const query = ref('')
   const regionSelected = ref('')
-  let regions = reactive<String[]>([])
-  const {data: countries} = await fetchCountries()
-  regions.value = getUniqueListBy(countries.value, 'region')
 
-  function getUniqueListBy(arr, key) {
-    const k = [...new Map(arr.map(item => [item[key], item])).values()]
-    return k;
-  }
+  const countries = await fetchCountries();
+  const regions = getUniqueListBy(countries, 'region')
 
   const filterCountries = computed(() => {
-    const queryFiltered = filterByQuery(countries.value)
-    const regionFiltered = filterByRegion(queryFiltered)
-    return regionFiltered;
+    const kal = filterByQuery(countries)
+    const kal2 = filterByRegion(kal)
+    return kal2;
   })
 
   function filterByQuery(countriesArray: Country[]) {
@@ -28,7 +28,7 @@ export const useCats = async () => {
   }
 
   function filterByRegion(countriesArray: Country[]) {
-     if (regionSelected.value.length) {
+    if (regionSelected.value.length) {
        return countriesArray.filter((country: Country) => country.region.toLowerCase().includes(regionSelected.value.toLowerCase()))
      }
      return countriesArray
@@ -43,11 +43,10 @@ export const useCats = async () => {
   }
 
   return {
-    filterCountries,
     countries,
+    regions,
+    filterCountries,
     updateSearchQuery,
-    updateRegionSelected,
-    query,
-    regions
+    updateRegionSelected
   }
 }

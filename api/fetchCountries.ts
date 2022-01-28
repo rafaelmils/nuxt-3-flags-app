@@ -1,6 +1,6 @@
 const fetchCountries = async () => {
-  const { data } = await useFetch('https://restcountries.com/v2/all')
-  return {data}
-  }
+  const request = await fetch("https://restcountries.com/v2/all");
+  return await request.json();
+}
 
-  export default fetchCountries
+export default fetchCountries;

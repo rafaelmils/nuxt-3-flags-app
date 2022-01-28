@@ -20,9 +20,7 @@
       </div>
       <div class="flex country-details mt-8">
         <p><span class=" mr-2">Border countries: </span></p>
-        <span class="border-country">Belgium</span>
-        <span class="border-country">Luxemburg</span>
-        <span class="border-country">Netherlands</span>
+        <span class="border-countries">Belgium</span>
       </div>
       
     </div>
@@ -31,34 +29,33 @@
 
 
 <script lang="ts" setup>
-  import { ref, reactive } from 'vue'
+  import { ref } from 'vue'
   import { useRoute } from 'vue-router'
   import Country from '@/types/Country'
   import fetchCountries from '@/api/fetchCountries'
   
   const route = useRoute()
   const slug = route.params._slug;
+  const countriesTemp = await fetchCountries();
+  const countries = ref(countriesTemp)
   const { data: country } = await useFetch(`https://restcountries.com/v2/alpha/${slug}`)
 
+  defineExpose({
+    countries
+  })
 </script>
 
 <style lang="css" scoped>
-  /* .country-details-container {
-    
-  } */
   .country-details p {
     padding: 2px 0;
   }
-   
   .country-details p span {
     @apply font-semibold
   }
-
-  .border-country {
+  .border-countries {
     @apply border-2 leading-7 h-8 px-6 mx-1 rounded-sm;
     box-shadow: 0px 0px 10px rgba(0,0,0,.1);
   }
-
   .detail-image {
     width: 700px;
     height: auto;
