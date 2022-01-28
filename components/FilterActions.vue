@@ -14,7 +14,7 @@
   </div>
   <div class="flex self-center">
     <select
-      class="w-60 p-2 h-12 pr-2 border-2 rounded"
+      class="w-50 pl-2 h-12 pr-2 border-2 rounded custom-select"
       v-model="selected"
       @change="handleDropdownChange(selected)"
       >
@@ -54,5 +54,14 @@ function handleDropdownChange(selectedRegion: string) {
 <style lang="css" scoped>
 .search-input {
   box-shadow: 0px 0px 10px rgba(0,0,0,.1);
+}
+.custom-select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url('../assets/icons/arrow-down.svg');
+    background-repeat: no-repeat, repeat;
+    background-position: right .7em top 50%, 0 0;
+    background-size: 1.5em auto, 100%;
 }
 </style>
